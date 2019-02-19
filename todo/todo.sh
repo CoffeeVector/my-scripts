@@ -9,7 +9,7 @@ case $(echo -e "Read\nAdd/Edit\nDelete\nDrive Push" | rofi -dmenu -i -p "Todo") 
 	Read)
 		/home/coffeevector/scripts/todo/todo-read.sh
 		;;
-	Drive Push)
+	Drive\ Push)
 		/home/coffeevector/scripts/todo/todo-push.sh
 		;;
 esac
