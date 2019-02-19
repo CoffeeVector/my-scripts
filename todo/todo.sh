@@ -1,5 +1,5 @@
 #!/bin/bash
-case $(echo -e "Read\nAdd/Edit\nDelete\nDrive Push" | rofi -dmenu -i -p "Todo") in
+case $(echo -e "Read\nAdd/Edit\nDelete\nDrive Push" | rofi -dmenu -i -lines 4 -p "Todo") in
 	Add/Edit)
 		/home/coffeevector/scripts/todo/todo-edit.sh
 		;;
