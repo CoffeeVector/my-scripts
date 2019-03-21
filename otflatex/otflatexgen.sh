@@ -4,7 +4,7 @@ echo "\documentclass[preview, border={5pt 5pt 5pt 5pt}]{standalone}
 \usepackage{amssymb}
 \begin{document}
 $\displaystyle" > ~/scripts/otflatex/cache/eq.tex
-rofi -dmenu -lines 1 -p "LaTeX" >> ~/scripts/otflatex/cache/eq.tex
+rofi -dmenu -lines 0 -p "LaTeX" >> ~/scripts/otflatex/cache/eq.tex
 echo "$\end{document}" >> ~/scripts/otflatex/cache/eq.tex
 
 pdflatex -output-directory ~/scripts/otflatex/cache/ ~/scripts/otflatex/cache/eq.tex
