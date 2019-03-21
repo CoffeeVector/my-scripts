@@ -3,6 +3,7 @@ echo "\documentclass[preview, border={5pt 5pt 5pt 5pt}]{standalone}
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{physics}
+\usepackage{xcolor}
 \begin{document}
 $\displaystyle" > ~/scripts/otflatex/cache/eq.tex
 st -e vim '+set syntax=latex' ~/scripts/otflatex/cache/intermediate.tex
