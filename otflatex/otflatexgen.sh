@@ -2,6 +2,7 @@
 echo "\documentclass[preview, border={5pt 5pt 5pt 5pt}]{standalone}
 \usepackage{amsmath}
 \usepackage{amssymb}
+\usepackage{physics}
 \begin{document}
 $\displaystyle" > ~/scripts/otflatex/cache/eq.tex
 st -e vim '+set syntax=latex' ~/scripts/otflatex/cache/intermediate.tex
@@ -16,6 +17,8 @@ pdflatex -output-directory ~/scripts/otflatex/cache/ ~/scripts/otflatex/cache/eq
 
 if [ ! -f ~/scripts/otflatex/cache/eq.pdf ]; then
 	notify-send "LaTeX compile failed!"
+	xclip -selection clipboard < ~/scripts/otflatex/cache/intermediate.tex
+	rm ~/scripts/otflatex/cache/intermediate.tex
 	exit 1
 fi
 
