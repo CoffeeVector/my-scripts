@@ -4,12 +4,12 @@ echo "\documentclass[preview, border={5pt 5pt 5pt 5pt}]{standalone}
 \usepackage{amssymb}
 \begin{document}
 $\displaystyle" > ~/scripts/otflatex/cache/eq.tex
-output=$(rofi -dmenu -lines 0 -p "LaTeX")
-if [ "$output" = "" ]; then
+st -e vim '+set syntax=latex' ~/scripts/otflatex/cache/intermediate.tex
+if [ "$(cat ~/scripts/otflatex/cache/intermediate.tex)" = "" ]; then
 	notify-send "EXITING, NOTHING INPUTTED"
 	exit 1
 fi
-echo "$output" >> ~/scripts/otflatex/cache/eq.tex
+cat ~/scripts/otflatex/cache/intermediate.tex >> ~/scripts/otflatex/cache/eq.tex
 echo "$\end{document}" >> ~/scripts/otflatex/cache/eq.tex
 
 pdflatex -output-directory ~/scripts/otflatex/cache/ ~/scripts/otflatex/cache/eq.tex
@@ -25,4 +25,5 @@ xclip -selection clipboard -t image/png -i ~/scripts/otflatex/cache/eq.png
 
 rm ~/scripts/otflatex/cache/eq.pdf
 rm ~/scripts/otflatex/cache/eq.png
+rm ~/scripts/otflatex/cache/intermediate.tex
 notify-send "LaTeX Compiled!"
