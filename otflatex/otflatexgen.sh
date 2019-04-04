@@ -8,6 +8,7 @@ if [ ! -f ~/scripts/otflatex/cache/eq.pdf ]; then
 fi
 
 convert -flatten -density 300 -quality 100% ~/scripts/otflatex/cache/eq.pdf ~/scripts/otflatex/cache/eq.png
+rm ~/scripts/otflatex/cache/eq.pdf
 
 xclip -selection clipboard -t image/png -i ~/scripts/otflatex/cache/eq.png
 
