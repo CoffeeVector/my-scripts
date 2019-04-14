@@ -1,5 +1,5 @@
 #!/bin/bash
-for i in src/*; do
+for i in src/*.tex; do
 	pdflatex --output-directory temp $i
 done
 
