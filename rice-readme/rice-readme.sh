@@ -13,4 +13,4 @@ cat ~/.config/i3/config | grep -v "#bindsym" | grep -e "bindsym" -e "# #" |sed "
 echo "\end{enumerate}
 \end{document}" >> /tmp/rice-readme/readme.tex
 pdflatex --output-directory /tmp/rice-readme/ /tmp/rice-readme/readme.tex
-evince /tmp/rice-readme/readme.pdf &
+zathura /tmp/rice-readme/readme.pdf &
