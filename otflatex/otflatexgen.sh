@@ -4,14 +4,14 @@ if [ ! -d /tmp/otflatex/ ]; then
 fi
 if [ ! -f /tmp/otflatex/eq.tex ]; then
 	echo "\documentclass[preview, border={5pt 5pt 5pt 5pt}]{standalone}
-	\usepackage{amsmath}
-	\usepackage{amssymb}
-	\usepackage{amsthm}
-	\usepackage{physics}
-	\usepackage{xcolor}
-	\usepackage{tikz}
-	\begin{document}
-	\end{document}" > /tmp/otflatex/eq.tex
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{physics}
+\usepackage{xcolor}
+\usepackage{tikz}
+\begin{document}
+\end{document}" > /tmp/otflatex/eq.tex
 fi
 st -e vim /tmp/otflatex/eq.tex +8
 # Assume that the tex will be compiled using my .vimrc
