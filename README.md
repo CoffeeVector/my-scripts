@@ -1,12 +1,12 @@
 # my-scripts
 
-## beamer.sh
+## beamerTemplate.sh
 Script that copies my favorite beamer setup into the filepath specified.
 ## prefixDirectory.sh
 Script that takes the current directory and adds Drive to it.
 i.e. ~/Academics will become ~/Drive/Academics.
 This is to help with pushing to drive.
-## tex-template.sh
+## texTemplate.sh
 Script that copies my favorite latex setup into the filepath specified.
 
 ## backup
