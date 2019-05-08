@@ -1,5 +1,5 @@
 #!/bin/bash
-rofiOutput=$(echo -e "Normal\nIncognito\nGuest\nBrowsh\nSchedule\nCat Courses\nDesmos" | rofi -dmenu -i -lines 7 -p "google-chrome")
+rofiOutput=$(echo -e "Normal\nIncognito\nGuest\nBookmarks" | rofi -dmenu -i -lines 4 -p "google-chrome")
 case $rofiOutput in
 	Incognito)
 		google-chrome --incognito &
@@ -9,17 +9,8 @@ case $rofiOutput in
 	Guest)
 		google-chrome --user-data-dir=$HOME/.config/google-chrome/Guest\ Profile &
 		;;
-	Browsh)
-		st -e browsh &
-		;;
-	Schedule)
-		google-chrome https://docs.google.com/spreadsheets/d/1EwtXgc-dD2aGPBF7PSismlcEY4A2ga-Uao_QPlwd0RQ/edit#gid=0 &
-		;;
-	Cat\ Courses)
-		google-chrome catcourses.ucmerced.edu &
-		;;
-	Desmos)
-		google-chrome desmos.com/calculator &
+	Bookmarks)
+		x-terminal-emulator -e ranger ~/.web-bookmarks/
 		;;
 	*)
 		rofiOutput=${rofiOutput// /+}
