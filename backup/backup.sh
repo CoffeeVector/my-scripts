@@ -9,17 +9,17 @@ case $(echo -e "Restic Backup\nRestic Forget\nRestic Snapshots\nRestic Prune\nDr
 		else
 			date +"%B %d, %Y" > ~/Backup/resticBackup/last-backup-date
 			notify-send.sh -r $notifyID "BACKUP COMPLETE."
+			rofi -dmenu -password -lines 0 -p "Password" | restic diff -r /home/coffeevector/Backup/resticBackup $output | head -n -8 | tail -n +2 > /home/coffeevector/Backup/resticBackup/resticDiff
+			if [ -s "/home/coffeevector/Backup/resticBackup/resticDiff" ]; then
+				cat /home/coffeevector/Backup/resticBackup/resticDiff | dirtree -o /home/coffeevector/Backup/resticBackup/resticDiff.html
+				cat /home/coffeevector/Backup/resticBackup/resticDiff | dirtree -t treemap -o /home/coffeevector/Backup/resticBackup/resticDiffTreemap.html
+				google-chrome /home/coffeevector/Backup/resticBackup/resticDiff.html
+				google-chrome /home/coffeevector/Backup/resticBackup/resticDiffTreemap.html
+			else
+				notify-send.sh -r $notifyID "RESTIC DIFF PASSWORD FAILED"
+			fi
+			mv /home/coffeevector/Backup/resticBackup/resticDiff /home/coffeevector/Backup/resticBackup/resticDiff.bak
 		fi
-		rofi -dmenu -password -lines 0 -p "Password" | restic diff -r /home/coffeevector/Backup/resticBackup $output | head -n -8 | tail -n +2 > /home/coffeevector/Backup/resticBackup/resticDiff
-		if [ -s "/home/coffeevector/Backup/resticBackup/resticDiff" ]; then
-			cat /home/coffeevector/Backup/resticBackup/resticDiff | dirtree -o /home/coffeevector/Backup/resticBackup/resticDiff.html
-			cat /home/coffeevector/Backup/resticBackup/resticDiff | dirtree -t treemap -o /home/coffeevector/Backup/resticBackup/resticDiffTreemap.html
-			google-chrome /home/coffeevector/Backup/resticBackup/resticDiff.html
-			google-chrome /home/coffeevector/Backup/resticBackup/resticDiffTreemap.html
-		else 
-			notify-send.sh -r $notifyID "RESTIC DIFF PASSWORD FAILED"
-		fi
-		mv /home/coffeevector/Backup/resticBackup/resticDiff /home/coffeevector/Backup/resticBackup/resticDiff.bak
 		;;
 	Restic\ Forget)
 		output=$(rofi -dmenu -password -lines 0 -p "Password" | restic snapshots -r /home/coffeevector/Backup/resticBackup | head -n -2 | awk '{if(NR!=1&&NR!=2){print $0}}' | tee  /tmp/restic-snapshots.txt)
