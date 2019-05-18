@@ -17,7 +17,7 @@ case $(echo -e "Restic Backup\nRestic Forget\nRestic Snapshots\nRestic Prune\nDr
 				google-chrome /home/coffeevector/Backup/resticBackup/resticDiff.html
 				google-chrome /home/coffeevector/Backup/resticBackup/resticDiffTreemap.html
 			else
-				notify-send.sh -r $notifyID "RESTIC DIFF PASSWORD FAILED"
+				notify-send "RESTIC DIFF PASSWORD FAILED"
 				polybar-msg hook restic 5
 			fi
 			mv /home/coffeevector/Backup/resticBackup/resticDiff /home/coffeevector/Backup/resticBackup/resticDiff.bak
@@ -39,7 +39,7 @@ case $(echo -e "Restic Backup\nRestic Forget\nRestic Snapshots\nRestic Prune\nDr
 			polybar-msg hook restic 1
 			exit 1
 		fi
-		output=$(rofi -dmenu -password -lines 0 -p "Password" | restic forget $snapshot -r /home/coffeevector/Backup/resticBackup)
+		output=$(rofi -dmenu -password -lines 0 -p "Password" | restic forget "$snapshot" -r /home/coffeevector/Backup/resticBackup)
 		if [ "$output" = "" ]; then
 			notify-send "SNAPSHOT FORGET FAILED"
 			polybar-msg hook restic 5
@@ -51,7 +51,6 @@ case $(echo -e "Restic Backup\nRestic Forget\nRestic Snapshots\nRestic Prune\nDr
 	Restic\ Snapshots)
 		polybar-msg hook restic 2
 		output=$(rofi -dmenu -password -lines 0 -p "Password" | restic snapshots -r /home/coffeevector/Backup/resticBackup | head -n -2 | awk '{if(NR!=1&&NR!=2){print $0}}' | tee  /tmp/restic-snapshots.txt)
-		echo $output
 		if [ "$output" = "" ]; then
 			notify-send "SNAPSHOT FAILED"
 			polybar-msg hook restic 5

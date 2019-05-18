@@ -1,5 +1,5 @@
-#!/bin/bash
-case $(echo -e "Shutdown\nReboot\nLock" | rofi -dmenu -i -lines 3 -p "Computer") in
+#!/bin/sh
+case $(printf "Shutdown\nReboot\nLock" | rofi -dmenu -i -lines 3 -p "Computer") in
 	Shutdown)
 		shutdown now
 		;;
