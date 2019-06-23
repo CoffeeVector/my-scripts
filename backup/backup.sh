@@ -39,7 +39,7 @@ case $(echo -e "Restic Backup\nRestic Forget\nRestic Snapshots\nRestic Prune\nDr
 			polybar-msg hook restic 1
 			exit 1
 		fi
-		output=$(rofi -dmenu -password -lines 0 -p "Password" | restic forget "$snapshot" -r /home/coffeevector/Backup/resticBackup)
+		output=$(rofi -dmenu -password -lines 0 -p "Password" | restic forget $snapshot -r /home/coffeevector/Backup/resticBackup)
 		if [ "$output" = "" ]; then
 			notify-send "SNAPSHOT FORGET FAILED"
 			polybar-msg hook restic 5
