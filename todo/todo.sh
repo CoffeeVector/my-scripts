@@ -1,5 +1,5 @@
 #!/bin/bash
-case $(echo -e "Open\nDrive Push" | rofi -dmenu -i -lines 2 -p "Todo") in
+case $(echo -e "Open\nAgenda\nDrive Push" | rofi -dmenu -i -lines 3 -p "Todo") in
 	Open)
 		st -e ranger ~/.todo/
 		;;
@@ -8,4 +8,7 @@ case $(echo -e "Open\nDrive Push" | rofi -dmenu -i -lines 2 -p "Todo") in
 		output=$(/home/coffeevector/go/bin/drive push -no-prompt ~/Drive/.todo/)
 		notify-send.sh -r $notifyID "DRIVE PUSH COMPLETE"
 		;;
+    Agenda)
+        sh generate-agenda.sh
+        st -e ranger ~/.todo/.agenda
 esac
