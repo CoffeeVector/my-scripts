@@ -9,6 +9,6 @@ case $(echo -e "Open\nAgenda\nDrive Push" | rofi -dmenu -i -lines 3 -p "Todo") i
 		notify-send.sh -r $notifyID "DRIVE PUSH COMPLETE"
 		;;
     Agenda)
-        sh generate-agenda.sh
+        sh ~/scripts/todo/generate-agenda.sh
         st -e ranger ~/.todo/.agenda
 esac
