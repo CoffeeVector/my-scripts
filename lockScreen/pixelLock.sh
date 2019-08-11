@@ -1,4 +1,5 @@
 #!/bin/bash
+notify-send "DUNST_COMMAND_PAUSE"
 TMPBG=/tmp/screen.png
 scrot $TMPBG && convert -gravity West $TMPBG -scale 2.5% -scale 4000% /home/coffeevector/Pictures/Themes/WallpaperOverlay.png -composite -matte $TMPBG
 i3lock \
@@ -15,5 +16,7 @@ i3lock \
 	--ringvercolor=66d9dfff \
 	--indpos="100+100:h-100-100" \
 	--timecolor=000000ff \
-	-S=0
+	-S=0 \
+    -n
 rm $TMPBG
+notify-send "DUNST_COMMAND_RESUME"
