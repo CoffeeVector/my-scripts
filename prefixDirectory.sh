@@ -1,5 +1,2 @@
 #!/bin/bash
-pwd=$(pwd)
-path=${pwd:18}
-path='/home/coffeevector/'$1$path
-echo $path
+echo $HOME/$1/$(pwd | sed 's|'$HOME/'|''|')
