@@ -1,16 +1,20 @@
 #!/bin/bash
 date=$(cat ~/Backup/resticBackup/last-backup-date)
+passwd=$(rofi -dmenu -password -lines 0 -p "Password")
+if [[ $passwd == "" ]]; then
+    exit 1
+fi
 case $(echo -e "Restic Backup\nRestic Forget\nRestic Snapshots\nRestic Prune\nDrive Push" | rofi -dmenu -i -lines 5 -p "Last Backup: $date") in
 	Restic\ Backup)
 		polybar-msg hook restic 2
-		output=$(rofi -dmenu -password -lines 0 -p "Password" | restic backup --exclude-file=/home/coffeevector/Backup/resticBackup/resticExclusions -r /home/coffeevector/Backup/resticBackup /home/coffeevector | (head -n 1 | awk '{print $4}'; tail -n 1 | awk '{print $2}'))
+		output=$(restic backup --exclude-file=/home/coffeevector/Backup/resticBackup/resticExclusions -r /home/coffeevector/Backup/resticBackup /home/coffeevector <<< $passwd | (head -n 1 | awk '{print $4}'; tail -n 1 | awk '{print $2}'))
 		if [ "$output" = "" ]; then
 			notify-send "BACKUP FAILED."
 			polybar-msg hook restic 5
 		else
 			date +"%B %d, %Y" > ~/Backup/resticBackup/last-backup-date
 			notify-send "BACKUP COMPLETE."
-			rofi -dmenu -password -lines 0 -p "Password" | restic diff -r /home/coffeevector/Backup/resticBackup $output | head -n -8 | tail -n +2 > /home/coffeevector/Backup/resticBackup/resticDiff
+			restic diff -r /home/coffeevector/Backup/resticBackup $output <<< $passwd | head -n -8 | tail -n +2 > /home/coffeevector/Backup/resticBackup/resticDiff
 			if [ -s "/home/coffeevector/Backup/resticBackup/resticDiff" ]; then
 				cat /home/coffeevector/Backup/resticBackup/resticDiff | dirtree -o /home/coffeevector/Backup/resticBackup/resticDiff.html
 				cat /home/coffeevector/Backup/resticBackup/resticDiff | dirtree -t treemap -o /home/coffeevector/Backup/resticBackup/resticDiffTreemap.html
@@ -26,7 +30,7 @@ case $(echo -e "Restic Backup\nRestic Forget\nRestic Snapshots\nRestic Prune\nDr
 		;;
 	Restic\ Forget)
 		polybar-msg hook restic 2
-		output=$(rofi -dmenu -password -lines 0 -p "Password" | restic snapshots -r /home/coffeevector/Backup/resticBackup | head -n -2 | awk '{if(NR!=1&&NR!=2){print $0}}' | tee  /tmp/restic-snapshots.txt)
+		output=$(restic snapshots -r /home/coffeevector/Backup/resticBackup <<< $passwd | head -n -2 | awk '{if(NR!=1&&NR!=2){print $0}}' | tee  /tmp/restic-snapshots.txt)
 		if [ "$output" = "" ]; then
 			notify-send "SNAPSHOT FORGET FAILED"
 			polybar-msg hook restic 5
@@ -39,7 +43,7 @@ case $(echo -e "Restic Backup\nRestic Forget\nRestic Snapshots\nRestic Prune\nDr
 			polybar-msg hook restic 1
 			exit 1
 		fi
-		output=$(rofi -dmenu -password -lines 0 -p "Password" | restic forget $snapshot -r /home/coffeevector/Backup/resticBackup)
+		output=$(restic forget $snapshot -r /home/coffeevector/Backup/resticBackup <<< $passwd)
 		if [ "$output" = "" ]; then
 			notify-send "SNAPSHOT FORGET FAILED"
 			polybar-msg hook restic 5
@@ -50,7 +54,7 @@ case $(echo -e "Restic Backup\nRestic Forget\nRestic Snapshots\nRestic Prune\nDr
 		;;
 	Restic\ Snapshots)
 		polybar-msg hook restic 2
-		output=$(rofi -dmenu -password -lines 0 -p "Password" | restic snapshots -r /home/coffeevector/Backup/resticBackup | head -n -2 | awk '{if(NR!=1&&NR!=2){print $0}}' | tee  /tmp/restic-snapshots.txt)
+		output=$(restic snapshots -r /home/coffeevector/Backup/resticBackup <<< $passwd | head -n -2 | awk '{if(NR!=1&&NR!=2){print $0}}' | tee  /tmp/restic-snapshots.txt)
 		if [ "$output" = "" ]; then
 			notify-send "SNAPSHOT FAILED"
 			polybar-msg hook restic 5
@@ -61,7 +65,7 @@ case $(echo -e "Restic Backup\nRestic Forget\nRestic Snapshots\nRestic Prune\nDr
 		;;
 	Restic\ Prune)
 		polybar-msg hook restic 2
-		output=$(rofi -dmenu -password -lines 0 -p "Password" | restic prune -r /home/coffeevector/Backup/resticBackup | grep "frees" | awk '{print $11 $12}')
+		output=$(restic prune -r /home/coffeevector/Backup/resticBackup <<< $passwd | grep "frees" | awk '{print $11 $12}')
 		if [ "$output" = "" ];then
 			notify-send "PRUNE FAILED."
 			polybar-msg hook restic 5
