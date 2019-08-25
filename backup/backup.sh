@@ -12,9 +12,10 @@ case $(echo -e "Restic Backup\nRestic Forget\nRestic Snapshots\nRestic Prune\nDr
 			notify-send "BACKUP FAILED."
 			polybar-msg hook restic 5
 		else
+
 			date +"%B %d, %Y" > ~/Backup/resticBackup/last-backup-date
 			notify-send "BACKUP COMPLETE."
-			restic diff -r /home/coffeevector/Backup/resticBackup $output <<< $passwd | head -n -8 | tail -n +2 > /home/coffeevector/Backup/resticBackup/resticDiff
+			restic diff -r /home/coffeevector/Backup/resticBackup $output <<< $passwd | tee /home/coffeevector/Backup/resticBackup/resticDiff | head -n -8 | tail -n +2
 			if [ -s "/home/coffeevector/Backup/resticBackup/resticDiff" ]; then
 				cat /home/coffeevector/Backup/resticBackup/resticDiff | dirtree -o /home/coffeevector/Backup/resticBackup/resticDiff.html
 				cat /home/coffeevector/Backup/resticBackup/resticDiff | dirtree -t treemap -o /home/coffeevector/Backup/resticBackup/resticDiffTreemap.html
