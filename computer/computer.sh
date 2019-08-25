@@ -1,5 +1,5 @@
 #!/bin/sh
-case $(printf "Shutdown\nReboot\nLock" | rofi -dmenu -i -lines 3 -p "Computer") in
+case $(printf "Shutdown\nReboot\nLock\nUndervolt" | rofi -dmenu -i -lines 4 -p "Computer") in
 	Shutdown)
 		shutdown now
 		;;
@@ -9,4 +9,7 @@ case $(printf "Shutdown\nReboot\nLock" | rofi -dmenu -i -lines 3 -p "Computer") 
 	Lock)
 		/home/coffeevector/scripts/lockScreen/i3lockScript.sh
 		;;
+    Undervolt)
+		st -e sudo /home/coffeevector/scripts/undervolt.sh set
+        ;;
 esac
