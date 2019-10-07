@@ -7,7 +7,7 @@ fi
 case $(echo -e "Restic Backup\nRestic Forget\nRestic Snapshots\nRestic Prune\nDrive Push" | rofi -dmenu -i -lines 5 -p "Last Backup: $date") in
     Restic\ Backup)
         polybar-msg hook restic 2
-        output=$(restic backup --exclude-file=/home/coffeevector/Backup/resticBackup/resticExclusions -r /home/coffeevector/Backup/resticBackup /home/coffeevector <<< $passwd | (head -n 1 | awk '{print $4}'; tail -n 1 | awk '{print $2}'))
+        output=$(restic backup --exclude-file=/home/coffeevector/Backup/resticBackup/resticExclusions/resticExclusions -r /home/coffeevector/Backup/resticBackup /home/coffeevector <<< $passwd | (head -n 1 | awk '{print $4}'; tail -n 1 | awk '{print $2}'))
         if [ "$output" = "" ]; then
             notify-send "BACKUP FAILED."
             polybar-msg hook restic 5
