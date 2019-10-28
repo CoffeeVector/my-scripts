@@ -24,4 +24,6 @@ rm /tmp/otflatex/eq.pdf
 
 xclip -selection clipboard -t image/png -i /tmp/otflatex/eq.png
 
+sxiv /tmp/otflatex/eq.png
+
 notify-send "LaTeX Compiled!"
