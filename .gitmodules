@@ -1,0 +1,3 @@
+[submodule "chive"]
+	path = chive
+	url = https://github.com/CoffeeVector/chive.git
